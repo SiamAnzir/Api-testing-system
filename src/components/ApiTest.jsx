@@ -10,7 +10,8 @@ const ApiTestComponent = () =>{
     //const [headers,setHeaders] = useState({});
     
       const [arr, setArr] = useState([]);
-      console.log(headerProps);
+      const [body,setBody] = useState()
+      //console.log(headerProps);
       const addInput = () => {
         setArr(s => {
           return [
@@ -96,7 +97,7 @@ const ApiTestComponent = () =>{
       }
     async function TestApi() {
         //const api = apiUrl;
-        if(method !== "Action" && apiUrl !== ""){
+        if(method === "GET" && apiUrl !== ""){
           await fetch(apiUrl, {
             method: method,
             headers: headers,
@@ -113,11 +114,29 @@ const ApiTestComponent = () =>{
               setTextColor("red");
             });
         }
+        else if(method === "POST" && apiUrl !== "") {
+          await fetch(apiUrl, {
+            method: method,
+            headers:headers,
+            body: body,
+          })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            setResponse("Success!! Show success response in browser console");
+            setTextColor("green");
+          })
+            .catch((err) => {
+              console.log("err", err);
+              setResponse("Error!! Show error response in browser console");
+              setTextColor("red");
+            });
+        }
         else{
           alert("Give Correct Value");
         }
       }
-      console.log(typeof response);
+      console.log(body);
     return(
         <section className="container">
             <div className="text-center mt-3">
@@ -199,6 +218,18 @@ const ApiTestComponent = () =>{
                 </table>   
               </div>
             </div>
+            {method === "POST" ? 
+            <>
+              <br/>
+              <div className="mt-5">
+                <h4 className="text-center">Add Body Data (only raw data available)</h4>
+                <div className="card">
+                  <div className="card-body">
+                  <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="{}" value={body} onChange={(e) => setBody(e.target.value)}></textarea>
+                  </div>
+                </div>
+              </div>
+            </> : <></>}
             <br/>
             <div className="mt-5">
               <h4 className="text-center">Response</h4>
