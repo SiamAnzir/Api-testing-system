@@ -82,8 +82,8 @@ const ApiTestComponent = () =>{
       var headers = {};
       useEffect(() => {
         headerProps.map(p => (p.action === true) ? headers[`${p.key}`] = p.value : '');
-        console.log(headers);
-      },[headerProps])
+        //console.log(headers);
+      },[headerProps,body])
       const addHeadersToBody = (itemKey , value) => {
         //console.log(key);
         //setHeaders({...headers,headers.itemKey = value});
@@ -136,7 +136,7 @@ const ApiTestComponent = () =>{
           alert("Give Correct Value");
         }
       }
-      console.log(body);
+      //console.log(body);
     return(
         <section className="container">
             <div className="text-center mt-3">
